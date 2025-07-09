@@ -16,3 +16,6 @@ springdoc:
     path: /swagger-ui.html
   api-docs:
     path: /swagger-docs
+
+
+#TODO add a possibility to login by providing user from ENV VARS
