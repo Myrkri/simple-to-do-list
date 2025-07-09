@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: to-do-list
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/inst
+    username: admin
+    password: admin
+    hikari:
+      schema: public
+  flyway:
+    default-schema: public
+  docker:
+    compose:
+      enabled: false
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  api-docs:
+    path: /swagger-docs
