@@ -48,14 +48,14 @@ public class ToDoServiceImpl implements ToDoService {
             //TODO think about existence check
             throw new RuntimeException();
         }
+        if (toDoDTO.isDone()) {
+            log.info("ToDo is done, updating completion date");
+            toDoDTO.setCompletedOn(LocalDate.now());
+        }
+
         log.info("Updating ToDo with a new data");
         final ToDoEntity toDoEntity = optEntity.get();
         toDoMapper.merge(toDoEntity, toDoDTO);
-
-        if (toDoEntity.isDone()) {
-            log.info("ToDo is done, updating completion date");
-            toDoEntity.setCompletedOn(LocalDate.now());
-        }
         return toDoMapper.toDto(toDoRepository.save(toDoEntity));
     }
 
