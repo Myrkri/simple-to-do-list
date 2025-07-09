@@ -41,7 +41,6 @@ public class ToDoServiceImpl implements ToDoService {
         return toDoMapper.toDto(toDoRepository.save(toDoEntity));
     }
 
-    //TODO get record by ID from DB and MERGE data
     @Override
     public ToDoDto updateToDo(final ToDoDto toDoDTO) {
         validateData(toDoDTO);
