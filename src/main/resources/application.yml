@@ -10,9 +10,6 @@ spring:
       schema: public
   flyway:
     default-schema: public
-  docker:
-    compose:
-      enabled: false
 springdoc:
   swagger-ui:
     enabled: true
