@@ -52,9 +52,9 @@ public class ToDoServiceImpl implements ToDoService {
         final ToDoEntity toDoEntity = optEntity.get();
         toDoMapper.merge(toDoEntity, toDoDTO);
 
-        if (toDoDTO.isDone()) {
+        if (toDoEntity.isDone()) {
             log.info("ToDo is done, updating completion date");
-            toDoDTO.setCompletedOn(LocalDate.now());
+            toDoEntity.setCompletedOn(LocalDate.now());
         }
         return toDoMapper.toDto(toDoRepository.save(toDoEntity));
     }
@@ -78,7 +78,7 @@ public class ToDoServiceImpl implements ToDoService {
             log.error("ToDoDTO is null");
             throw new NullPointerException("There is no data to add");
         }
-        if (StringUtils.hasText(toDoDTO.getDescription())) {
+        if (!StringUtils.hasText(toDoDTO.getDescription())) {
             log.error("Description is empty");
             throw new NullPointerException("There is no description provided");
         }
