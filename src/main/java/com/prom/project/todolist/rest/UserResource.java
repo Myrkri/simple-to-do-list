@@ -1,6 +1,6 @@
 package com.prom.project.todolist.rest;
 
-import com.prom.project.todolist.service.SecurityService;
+import com.prom.project.todolist.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class SecurityResource {
+public class UserResource {
 
-    private final SecurityService securityService;
+    private final UserService userService;
 
     @Operation(summary = "Api to login into the system")
     @PostMapping("/login")
