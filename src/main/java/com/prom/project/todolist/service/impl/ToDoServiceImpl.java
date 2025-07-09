@@ -30,14 +30,13 @@ public class ToDoServiceImpl implements ToDoService {
         return toDoMapper.toDtos(toDoEntities);
     }
 
-    //TODO move duplicated code from create and update methods to separate methods
     @Override
     public ToDoDto addToDo(final ToDoDto toDoDTO) {
         validateData(toDoDTO);
         toDoDTO.setCreatedOn(LocalDate.now());
         log.info("Creating a new ToDo");
         var toDoEntity = toDoMapper.toEntity(toDoDTO);
-        return toDoMapper.toDto(toDoRepository.save(toDoEntity));
+        return saveToDB(toDoEntity);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class ToDoServiceImpl implements ToDoService {
         log.info("Updating ToDo with a new data");
         final ToDoEntity toDoEntity = optEntity.get();
         toDoMapper.merge(toDoEntity, toDoDTO);
-        return toDoMapper.toDto(toDoRepository.save(toDoEntity));
+        return saveToDB(toDoEntity);
     }
 
     @Override
@@ -83,5 +82,9 @@ public class ToDoServiceImpl implements ToDoService {
             throw new NullPointerException("There is no description provided");
         }
         log.info("ToDoDTO is valid");
+    }
+
+    private ToDoDto saveToDB(final ToDoEntity toDoEntity) {
+        return toDoMapper.toDto(toDoRepository.save(toDoEntity));
     }
 }
