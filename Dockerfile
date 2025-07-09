@@ -1,4 +1,4 @@
-FROM 3.9.10-amazoncorretto-21 AS build
+FROM maven:3.9.10-amazoncorretto-21 AS build
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY src src
 
 RUN mvn clean package -DskipTests
 
-FROM 3.9.10-amazoncorretto-21
+FROM maven:3.9.10-amazoncorretto-21
 
 COPY --from=build /app/target/*.jar app.jar
 
