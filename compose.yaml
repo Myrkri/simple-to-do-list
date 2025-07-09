@@ -6,13 +6,11 @@ services:
   postgres:
     networks:
       - postgres-todo-app-network
-    image: 'postgres:latest'
+    image: bitnami/postgresql:latest
     environment:
-      - 'POSTGRES_DB=inst'
-      - 'POSTGRES_PASSWORD=admin'
-      - 'POSTGRES_USER=admin'
-    ports:
-      - '5432'
+      - 'POSTGRESQL_DATABASE=inst'
+      - 'POSTGRESQL_USERNAME=admin'
+      - 'POSTGRESQL_PASSWORD=admin'
 
   app:
     depends_on:
@@ -22,3 +20,5 @@ services:
     ports:
       - "8080:8080"
     build: .
+    environment:
+      - 'spring.datasource.url=jdbc:postgresql://postgres:5432/inst'
