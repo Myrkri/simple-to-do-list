@@ -10,12 +10,17 @@ spring:
       schema: public
   flyway:
     default-schema: public
+
 springdoc:
   swagger-ui:
     enabled: true
     path: /swagger-ui.html
   api-docs:
     path: /swagger-docs
+
+system:
+  expiration-time: 600000
+  secret: c3VwZXItc2VjcmV0LWtleQ==
 
 
 #TODO add a possibility to login by providing user from ENV VARS
