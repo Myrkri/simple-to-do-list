@@ -13,7 +13,7 @@ public class UserDto implements UserDetails {
 
     private String username;
     private String password;
-    private String role;
+    private String role = "USER";
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
