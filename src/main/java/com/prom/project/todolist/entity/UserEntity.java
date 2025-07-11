@@ -18,4 +18,7 @@ public class UserEntity {
 
     @Column(name = "password", nullable = false, length = Integer.MAX_VALUE)
     private String password;
+
+    @Column(name = "role")
+    private String role;
 }
