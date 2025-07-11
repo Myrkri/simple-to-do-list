@@ -13,7 +13,7 @@ public class UserEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "username", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "username", nullable = false, length = Integer.MAX_VALUE, unique = true)
     private String username;
 
     @Column(name = "password", nullable = false, length = Integer.MAX_VALUE)
