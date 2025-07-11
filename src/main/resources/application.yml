@@ -19,8 +19,8 @@ springdoc:
     path: /swagger-docs
 
 system:
-  expiration-time: 600000
-  secret: c3VwZXItc2VjcmV0LWtleQ==
+  expiration-time: 30
+  key-size: 1024
 
 
 #TODO add a possibility to login by providing user from ENV VARS
