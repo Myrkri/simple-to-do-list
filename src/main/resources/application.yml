@@ -20,7 +20,7 @@ springdoc:
 
 system:
   expiration-time: 30
-  key-size: 1024
+  key-size: 2048
 
 
 #TODO add a possibility to login by providing user from ENV VARS
