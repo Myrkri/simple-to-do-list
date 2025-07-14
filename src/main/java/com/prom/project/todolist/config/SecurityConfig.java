@@ -23,10 +23,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizeRequests -> authorizeRequests
-                                //TODO Update secured apis
-                                .anyRequest().permitAll()
-//                                .requestMatchers("/api/", "/swagger-ui.html", "/swagger-ui/index.html").permitAll()
-//                                .anyRequest().authenticated()
+                                .requestMatchers("/api/login", "/api/signup", "/swagger-ui.html", "/swagger-ui/**", "/swagger-docs/**").permitAll()
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement(mnmConfig -> mnmConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
