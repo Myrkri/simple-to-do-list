@@ -1,5 +1,6 @@
 package com.prom.project.todolist.service.impl;
 
+import com.prom.project.todolist.dto.TokenResponse;
 import com.prom.project.todolist.dto.UserDto;
 import com.prom.project.todolist.entity.UserEntity;
 import com.prom.project.todolist.mapper.UserMapper;
@@ -28,13 +29,10 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    //TODO update returned format of token
-
     @Override
-    public String login(final UserDto user) {
+    public TokenResponse login(final UserDto user) {
         if (!userRepository.existsByUsername(user.getUsername())) {
             log.info("Username `{}` doesn't exist", user.getUsername());
-            throw new IllegalStateException("User isn't registered");
         }
         final Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
@@ -42,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String register(final UserDto user) {
+    public TokenResponse register(final UserDto user) {
         if (userRepository.existsByUsername(user.getUsername())) {
             log.info("Username `{}` is already in use", user.getUsername());
             throw new IllegalStateException("Username already exists");

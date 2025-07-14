@@ -1,10 +1,11 @@
 package com.prom.project.todolist.service;
 
+import com.prom.project.todolist.dto.TokenResponse;
 import com.prom.project.todolist.dto.UserDto;
 
 public interface UserService {
 
-    String login(UserDto user);
-    String register(UserDto user);
+    TokenResponse login(UserDto user);
+    TokenResponse register(UserDto user);
     UserDto getCurrentUser();
 }

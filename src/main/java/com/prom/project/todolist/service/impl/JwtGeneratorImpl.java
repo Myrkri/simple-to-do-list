@@ -6,6 +6,7 @@ import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.prom.project.todolist.dto.TokenResponse;
 import com.prom.project.todolist.service.JwtGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -32,7 +33,7 @@ public class JwtGeneratorImpl implements JwtGenerator {
 
     @SneakyThrows
     @Override
-    public String generateJwt(final UserDetails userDetails) {
+    public TokenResponse generateJwt(final UserDetails userDetails) {
         final Instant now = Instant.now();
         final JWTClaimsSet claims = new JWTClaimsSet.Builder()
                 .subject(userDetails.getUsername())
@@ -47,6 +48,6 @@ public class JwtGeneratorImpl implements JwtGenerator {
         final JWSSigner signer = new RSASSASigner(rsaKey.toPrivateKey());
         jwt.sign(signer);
 
-        return jwt.serialize();
+        return new TokenResponse(jwt.serialize(), claims.getIssueTime(), claims.getExpirationTime());
     }
 }
