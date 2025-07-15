@@ -15,30 +15,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ToDoResource {
 
-    private final ToDoService toDoListService;
+    private final ToDoService toDoService;
 
     @Operation(summary = "Api to request all ToDos")
     @GetMapping("/get-all")
     public ResponseEntity<List<ToDoDto>> getToDos() {
-        return ResponseEntity.ok(toDoListService.getToDos());
+        return ResponseEntity.ok(toDoService.getToDos());
     }
 
     @Operation(summary = "Api to create a new ToDo")
     @PostMapping("/create")
     public ResponseEntity<ToDoDto> createTodo(@RequestBody ToDoDto toDoDTO) {
-        return ResponseEntity.ok(toDoListService.addToDo(toDoDTO));
+        return ResponseEntity.ok(toDoService.addToDo(toDoDTO));
     }
 
     @Operation(summary = "Api to update ToDo")
     @PutMapping("/update")
     public ResponseEntity<ToDoDto> updateTodo(@RequestBody ToDoDto toDoDTO) {
-        return ResponseEntity.ok(toDoListService.updateToDo(toDoDTO));
+        return ResponseEntity.ok(toDoService.updateToDo(toDoDTO));
     }
 
     @Operation(summary = "Api to delete ToDo by ID")
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteTodo(@RequestParam Integer id) {
-        toDoListService.deleteToDo(id);
+        toDoService.deleteToDo(id);
         return ResponseEntity.ok("Deletion Successful");
     }
 
