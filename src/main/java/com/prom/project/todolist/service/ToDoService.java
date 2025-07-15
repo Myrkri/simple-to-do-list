@@ -8,5 +8,5 @@ public interface ToDoService {
     List<ToDoDto> getToDos();
     ToDoDto addToDo(ToDoDto toDoListDTO);
     ToDoDto updateToDo(ToDoDto toDoListDTO);
-    boolean deleteToDo(Integer id);
+    void deleteToDo(Integer id);
 }

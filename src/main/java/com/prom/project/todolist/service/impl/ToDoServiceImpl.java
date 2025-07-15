@@ -2,6 +2,7 @@ package com.prom.project.todolist.service.impl;
 
 import com.prom.project.todolist.dto.ToDoDto;
 import com.prom.project.todolist.entity.ToDoEntity;
+import com.prom.project.todolist.exception.NotFoundException;
 import com.prom.project.todolist.mapper.ToDoMapper;
 import com.prom.project.todolist.repository.ToDoRepository;
 import com.prom.project.todolist.service.ToDoService;
@@ -13,7 +14,6 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -42,33 +42,27 @@ public class ToDoServiceImpl implements ToDoService {
     @Override
     public ToDoDto updateToDo(final ToDoDto toDoDTO) {
         validateData(toDoDTO);
-        final Optional<ToDoEntity> optEntity = toDoRepository.findById(toDoDTO.getId());
-        if (optEntity.isEmpty()) {
-            //TODO think about existence check
-            throw new RuntimeException();
-        }
+        final ToDoEntity toDoEntity = toDoRepository.findById(toDoDTO.getId())
+                .orElseThrow(() -> new NotFoundException(toDoDTO.getId()));
         if (toDoDTO.isDone()) {
             log.info("ToDo is done, updating completion date");
             toDoDTO.setCompletedOn(LocalDate.now());
         }
 
         log.info("Updating ToDo with a new data");
-        final ToDoEntity toDoEntity = optEntity.get();
         toDoMapper.merge(toDoEntity, toDoDTO);
         return saveToDB(toDoEntity);
     }
 
     @Override
-    public boolean deleteToDo(final Integer id) {
+    public void deleteToDo(final Integer id) {
         log.info("Deleting ToDo...");
         if (!toDoRepository.existsById(id)) {
-            log.warn("ToDo with id `{}` does not exist", id);
-            return false;
+            throw new NotFoundException(id);
         }
         log.debug("ToDo exists with id `{}`", id);
         toDoRepository.deleteById(id);
         log.info("ToDo removed successfully");
-        return true;
     }
 
     private void validateData(final ToDoDto toDoDTO) {
