@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,12 +32,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TokenResponse login(final UserDto user) {
-        if (!userRepository.existsByUsername(user.getUsername())) {
-            log.info("Username `{}` doesn't exist", user.getUsername());
+        try {
+            final Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+            return jwtGenerator.generateJwt((UserDetails) auth.getPrincipal());
+        } catch (AuthenticationException ex) {
+            log.error("Login failed for user {}", user.getUsername(), ex);
+            throw ex;
         }
-        final Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        return jwtGenerator.generateJwt((UserDetails) auth.getPrincipal());
     }
 
     @Override
