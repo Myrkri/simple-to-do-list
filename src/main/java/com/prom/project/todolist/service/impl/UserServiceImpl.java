@@ -7,6 +7,7 @@ import com.prom.project.todolist.mapper.UserMapper;
 import com.prom.project.todolist.repository.UserRepository;
 import com.prom.project.todolist.service.JwtGenerator;
 import com.prom.project.todolist.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,6 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public TokenResponse register(final UserDto user) {
         if (userRepository.existsByUsername(user.getUsername())) {
             log.info("Username `{}` is already in use", user.getUsername());

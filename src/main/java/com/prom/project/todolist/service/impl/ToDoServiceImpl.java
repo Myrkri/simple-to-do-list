@@ -6,6 +6,7 @@ import com.prom.project.todolist.exception.NotFoundException;
 import com.prom.project.todolist.mapper.ToDoMapper;
 import com.prom.project.todolist.repository.ToDoRepository;
 import com.prom.project.todolist.service.ToDoService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class ToDoServiceImpl implements ToDoService {
     private final ToDoMapper toDoMapper;
 
     @Override
+    @Transactional
     public List<ToDoDto> getToDos() {
         var toDoEntities = toDoRepository.findAll();
         log.info("Amount of ToDos : `{}`", toDoEntities.size());
@@ -31,6 +33,7 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     @Override
+    @Transactional
     public ToDoDto addToDo(final ToDoDto toDoDTO) {
         validateData(toDoDTO);
         toDoDTO.setCreatedOn(LocalDate.now());
@@ -40,6 +43,7 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     @Override
+    @Transactional
     public ToDoDto updateToDo(final ToDoDto toDoDTO) {
         validateData(toDoDTO);
         final ToDoEntity toDoEntity = toDoRepository.findById(toDoDTO.getId())
@@ -55,6 +59,7 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     @Override
+    @Transactional
     public void deleteToDo(final Integer id) {
         log.info("Deleting ToDo...");
         if (!toDoRepository.existsById(id)) {
