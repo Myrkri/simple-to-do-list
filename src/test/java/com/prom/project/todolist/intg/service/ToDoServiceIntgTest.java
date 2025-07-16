@@ -4,6 +4,7 @@ import com.prom.project.todolist.dto.ToDoDto;
 import com.prom.project.todolist.entity.ToDoEntity;
 import com.prom.project.todolist.repository.ToDoRepository;
 import com.prom.project.todolist.service.ToDoService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,10 @@ public class ToDoServiceIntgTest {
         assertTrue(toDoRepository.existsById(entity.getId()));
         toDoService.deleteToDo(entity.getId());
         assertFalse(toDoRepository.existsById(entity.getId()));
+    }
+
+    @AfterEach
+    void tearDown() {
+        toDoRepository.deleteAll();
     }
 }

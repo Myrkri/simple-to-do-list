@@ -2,6 +2,7 @@ package com.prom.project.todolist.intg.rest;
 
 import com.prom.project.todolist.entity.UserEntity;
 import com.prom.project.todolist.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -54,5 +55,10 @@ public class UserResourceIntgTest {
                 .andExpect(jsonPath("token").isNotEmpty());
 
         assertTrue(repository.existsByUsername(result.getUsername()));
+    }
+
+    @AfterEach
+    void tearDown() {
+        repository.deleteAll();
     }
 }

@@ -2,6 +2,7 @@ package com.prom.project.todolist.intg.repository;
 
 import com.prom.project.todolist.entity.UserEntity;
 import com.prom.project.todolist.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -27,6 +28,11 @@ class UserRepositoryIntgTest {
         boolean exists = userRepository.existsByUsername("test");
 
         assertTrue(exists);
+    }
+
+    @AfterEach
+    void tearDown() {
+        userRepository.deleteAll();
     }
 }
 

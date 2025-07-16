@@ -1,5 +1,7 @@
 package com.prom.project.todolist.intg.rest;
 
+import com.prom.project.todolist.repository.ToDoRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,6 +21,8 @@ public class ToDoResourceIntgTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ToDoRepository repository;
 
     @Test
     void createNewToDo() throws Exception {
@@ -31,5 +35,10 @@ public class ToDoResourceIntgTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("description").value("TEST"))
                 .andExpect(jsonPath("id").value(1));
+    }
+
+    @AfterEach
+    void tearDown() {
+        repository.deleteAll();
     }
 }

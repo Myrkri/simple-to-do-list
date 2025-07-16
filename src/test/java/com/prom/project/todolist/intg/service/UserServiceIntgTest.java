@@ -4,6 +4,7 @@ import com.prom.project.todolist.dto.TokenResponse;
 import com.prom.project.todolist.dto.UserDto;
 import com.prom.project.todolist.repository.UserRepository;
 import com.prom.project.todolist.service.UserService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,5 +63,10 @@ public class UserServiceIntgTest {
 
         assertEquals("test-user", dto.getUsername());
         assertEquals("[ROLE_USER]", dto.getRole());
+    }
+
+    @AfterEach
+    void tearDown() {
+        userRepository.deleteAll();
     }
 }
