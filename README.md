@@ -56,5 +56,5 @@ Command to run unit test:
 ````
 Command to run integration test:
 ```bash
-./mvnw verify
+./mvnw verify -Pintegration
 ```
