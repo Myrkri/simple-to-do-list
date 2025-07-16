@@ -1,4 +1,4 @@
-package com.prom.project.todolist.intg;
+package com.prom.project.todolist.intg.repository;
 
 import com.prom.project.todolist.entity.UserEntity;
 import com.prom.project.todolist.repository.UserRepository;
