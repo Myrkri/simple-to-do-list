@@ -27,7 +27,7 @@ public class ToDoEntity {
     @Column(name = "is_done", nullable = false)
     private boolean isDone;
 
-    @Column(name = "completed_on", nullable = false)
+    @Column(name = "completed_on")
     private LocalDate completedOn;
 
 }

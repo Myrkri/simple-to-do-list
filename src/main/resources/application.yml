@@ -6,8 +6,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/inst
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    hikari:
-      schema: public
   flyway:
     default-schema: public
 

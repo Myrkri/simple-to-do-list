@@ -38,8 +38,7 @@ public class ToDoServiceImpl implements ToDoService {
         validateData(toDoDTO);
         toDoDTO.setCreatedOn(LocalDate.now());
         log.info("Creating a new ToDo");
-        var toDoEntity = toDoMapper.toEntity(toDoDTO);
-        return saveToDB(toDoEntity);
+        return saveToDB(toDoMapper.toEntity(toDoDTO));
     }
 
     @Override
