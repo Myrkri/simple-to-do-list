@@ -11,7 +11,7 @@ A minimal REST API that demonstrates:
 ## Tech Stack
 
 * **Java 21**
-* **Spring Boot 3.3**
+* **Spring Boot 3**
 * **Nimbus JOSE**
 * **PostgreSQL 14+**
 * **Maven 3**
