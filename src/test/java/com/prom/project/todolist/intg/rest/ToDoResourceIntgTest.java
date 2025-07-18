@@ -27,7 +27,8 @@ public class ToDoResourceIntgTest {
     @Test
     void createNewToDo() throws Exception {
         mockMvc.perform(post("/api/list/create")
-                        .with(jwt())
+                        .with(jwt().jwt((jwt) -> jwt.subject("test_user")
+                                .claim("roles", "ROLE_USER")))
                 .contentType("application/json")
                 .content(""" 
                   {"description":"TEST"}

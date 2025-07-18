@@ -4,14 +4,17 @@ import com.prom.project.todolist.dto.ToDoDto;
 import com.prom.project.todolist.entity.ToDoEntity;
 import com.prom.project.todolist.repository.ToDoRepository;
 import com.prom.project.todolist.service.ToDoService;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +26,21 @@ public class ToDoServiceIntgTest {
     private ToDoService toDoService;
     @Autowired
     private ToDoRepository toDoRepository;
+
+    @BeforeAll
+    static void putJwtPrincipal() {
+        var jwt = Jwt.withTokenValue("test")
+                .header("Content-Type", "application/json")
+                .claim("sub", "test_user")
+                .claim("roles", List.of("ROLE_USER"))
+                .build();
+
+        var auth = new JwtAuthenticationToken(
+                jwt,
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
 
     @Test
     @DisplayName("Create a new ToDo")
@@ -55,5 +73,10 @@ public class ToDoServiceIntgTest {
     @AfterEach
     void tearDown() {
         toDoRepository.deleteAll();
+    }
+
+    @AfterAll
+    static void clearContext() {
+        SecurityContextHolder.clearContext();
     }
 }
