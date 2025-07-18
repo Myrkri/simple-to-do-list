@@ -1,9 +1,11 @@
 package com.prom.project.todolist.unit.service;
 
 import com.prom.project.todolist.dto.ToDoDto;
+import com.prom.project.todolist.dto.UserDto;
 import com.prom.project.todolist.entity.ToDoEntity;
 import com.prom.project.todolist.mapper.ToDoMapper;
 import com.prom.project.todolist.repository.ToDoRepository;
+import com.prom.project.todolist.service.UserService;
 import com.prom.project.todolist.service.impl.ToDoServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +28,8 @@ public class ToDoServiceTest {
     private ToDoRepository toDoRepository;
     @Mock
     private ToDoMapper toDoMapper;
+    @Mock
+    private UserService userService;
 
     @InjectMocks
     private ToDoServiceImpl toDoService;
@@ -54,6 +58,7 @@ public class ToDoServiceTest {
         savedEntity.setDescription("TEST");
         savedEntity.setCreatedOn(LocalDate.now());
 
+        when(userService.getCurrentUser()).thenReturn(new UserDto().setUsername("test"));
         when(toDoMapper.toEntity(any(ToDoDto.class))).thenReturn(mappedEntity);
         when(toDoRepository.save(any(ToDoEntity.class))).thenReturn(savedEntity);
         when(toDoMapper.toDto(any(ToDoEntity.class))).thenReturn(expected);
