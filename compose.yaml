@@ -22,3 +22,5 @@ services:
     build: .
     environment:
       - 'spring.datasource.url=jdbc:postgresql://postgres:5432/inst'
+      - 'DB_USERNAME=admin'
+      - 'DB_PASSWORD=admin'
