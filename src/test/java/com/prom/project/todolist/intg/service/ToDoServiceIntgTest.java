@@ -31,7 +31,7 @@ public class ToDoServiceIntgTest {
     static void putJwtPrincipal() {
         var jwt = Jwt.withTokenValue("test")
                 .header("Content-Type", "application/json")
-                .claim("sub", "test_user")
+                .subject("test_user")
                 .claim("roles", List.of("ROLE_USER"))
                 .build();
 
