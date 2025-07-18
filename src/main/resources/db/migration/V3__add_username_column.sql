@@ -1,0 +1,2 @@
+ALTER TABLE list
+    ADD COLUMN username VARCHAR(50);

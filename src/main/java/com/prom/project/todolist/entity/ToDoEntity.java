@@ -30,4 +30,7 @@ public class ToDoEntity {
     @Column(name = "completed_on")
     private LocalDate completedOn;
 
+    @Column(name = "username")
+    private String username;
+
 }

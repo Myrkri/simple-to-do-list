@@ -1,11 +1,13 @@
 package com.prom.project.todolist.service.impl;
 
 import com.prom.project.todolist.dto.ToDoDto;
+import com.prom.project.todolist.dto.UserDto;
 import com.prom.project.todolist.entity.ToDoEntity;
 import com.prom.project.todolist.exception.NotFoundException;
 import com.prom.project.todolist.mapper.ToDoMapper;
 import com.prom.project.todolist.repository.ToDoRepository;
 import com.prom.project.todolist.service.ToDoService;
+import com.prom.project.todolist.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +25,12 @@ public class ToDoServiceImpl implements ToDoService {
 
     private final ToDoRepository toDoRepository;
     private final ToDoMapper toDoMapper;
+    private final UserService userService;
 
     @Override
-    @Transactional
     public List<ToDoDto> getToDos() {
-        var toDoEntities = toDoRepository.findAll();
+        final UserDto user = userService.getCurrentUser();
+        var toDoEntities = toDoRepository.findByUsername(user.getUsername());
         log.info("Amount of ToDos : `{}`", toDoEntities.size());
         return toDoMapper.toDtos(toDoEntities);
     }
@@ -36,7 +39,9 @@ public class ToDoServiceImpl implements ToDoService {
     @Transactional
     public ToDoDto addToDo(final ToDoDto toDoDTO) {
         validateData(toDoDTO);
+        final UserDto user = userService.getCurrentUser();
         toDoDTO.setCreatedOn(LocalDate.now());
+        toDoDTO.setUsername(user.getUsername());
         log.info("Creating a new ToDo");
         return saveToDB(toDoMapper.toEntity(toDoDTO));
     }

@@ -1,5 +1,6 @@
 package com.prom.project.todolist.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -12,4 +13,6 @@ public class ToDoDto {
     private LocalDate createdOn;
     private boolean isDone;
     private LocalDate completedOn;
+    @JsonIgnore
+    private String username;
 }
